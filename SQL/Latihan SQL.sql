@@ -1,7 +1,7 @@
-CREATE DATABASE
+--CREATE DATABASE
 CREATE DATABASE transaction;
 
-CREATE TABLE product_types
+--CREATE TABLE product_types
 CREATE TABLE product_types (
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(255),
@@ -9,7 +9,7 @@ CREATE TABLE product_types (
     updated_at TIMESTAMP
 );
 
-CREATE TABLE operators
+--CREATE TABLE operators
 CREATE TABLE operators (
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(255),
@@ -17,7 +17,7 @@ CREATE TABLE operators (
     updated_at TIMESTAMP
 );
 
-CREATE TABLE product_descriptions
+--CREATE TABLE product_descriptions
 CREATE TABLE product_descriptions (
     id SERIAL PRIMARY KEY NOT NULL,
     description TEXT,
@@ -25,7 +25,7 @@ CREATE TABLE product_descriptions (
     updated_at TIMESTAMP
 );
 
-CREATE TABLE products
+--CREATE TABLE products
 CREATE TABLE products (
     id SERIAL PRIMARY KEY NOT NULL,
     product_type_id INTEGER,
@@ -39,7 +39,7 @@ CREATE TABLE products (
     FOREIGN KEY (operator_id) REFERENCES operators(id)
 );
 
-CREATE TABLE payment_methods
+--CREATE TABLE payment_methods
 CREATE TABLE payment_methods (
     id SERIAL PRIMARY KEY NOT NULL,
     name VARCHAR(255),
@@ -48,7 +48,7 @@ CREATE TABLE payment_methods (
     updated_at TIMESTAMP
 );
 
-CREATE TABLE users
+--CREATE TABLE users
 CREATE TABLE users (
     id SERIAL PRIMARY KEY NOT NULL,
     status SMALLINT,
@@ -58,7 +58,7 @@ CREATE TABLE users (
     updated_at TIMESTAMP
 );
 
-CREATE TABLE transactions
+--CREATE TABLE transactions
 CREATE TABLE transactions (
     id SERIAL PRIMARY KEY NOT NULL,
     user_id INTEGER,
@@ -72,7 +72,7 @@ CREATE TABLE transactions (
     FOREIGN KEY (payment_method_id) REFERENCES payment_methods(id)
 );
 
-CREATE TABLE transaction_details
+--CREATE TABLE transaction_details
 CREATE TABLE transaction_details (
     transaction_id INTEGER REFERENCES transactions(id),
     product_id INTEGER REFERENCES products(id),
@@ -83,3 +83,13 @@ CREATE TABLE transaction_details (
     updated_at TIMESTAMP,
     PRIMARY KEY (transaction_id, product_id)
 );
+
+--INSERT
+--1a
+INSERT INTO operators(name, created_at, updated_at)
+VALUES
+    ('Viryal', current_timestamp, NULL),
+    ('Zahra', current_timestamp, NULL),
+    ('Nada', current_timestamp, NULL),
+    ('Islamia', current_timestamp, NULL),
+    ('Alfiah', current_timestamp, NULL);
