@@ -216,3 +216,27 @@ VALUES
     (15, 8, 1, 1, 66750, current_timestamp, NULL),
     (15, 5, 1, 1, 386000, current_timestamp, NULL),
     (15, 2, 1, 1, 75600, current_timestamp, NULL);
+
+--SELECT
+--Tampilkan nama user/pelanggan dengan gender laki-laki/M
+--Users tidak memiliki atribut nama
+SELECT * FROM users WHERE gender = 'L';
+--Jika users memiliki atribut nama
+SELECT name users WHERE gender = 'L';
+
+--Tampilkan product dengan id = 3
+SELECT * FROM products WHERE id = 3;
+
+--Tampilkan data pelanggan yang created_at dalam range 7 hari ke belakang dan mempunyai nama mengandung kata 'a'
+--Anggap users memiliki atribut nama
+SELECT * FROM users WHERE created_at > current_date - 7 and name like '%a%';
+
+--Hitung jumlah user/pelanggan dengan status gender perempuan
+SELECT COUNT(*) FROM users WHERE gender = 'P';
+
+--Tampilkan data pelanggan dengan urutan sesuai nama abjad
+--Anggap users memiliki atribut nama
+SELECT * FROM users ORDER BY name;
+
+--Tampilkan 5 data pada data product
+SELECT * FROM products LIMIT 5;
