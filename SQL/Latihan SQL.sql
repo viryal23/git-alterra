@@ -247,3 +247,10 @@ UPDATE products SET name = 'Product Dummy', updated_at = current_timestamp WHERE
 
 --Update qty = 3 pada transaction detail dengan product id 1
 UPDATE transaction_details SET qty = 3, updated_at = current_timestamp WHERE product_id = 1;
+
+--DELETE
+--Delete data pada tabel product dengan id 1
+DELETE FROM products WHERE id = 1;
+
+--Delete data pada tabel product dengan product type id 1
+DELETE FROM products WHERE product_type_id = 1;
