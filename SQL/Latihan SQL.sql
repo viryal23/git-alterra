@@ -240,3 +240,10 @@ SELECT * FROM users ORDER BY name;
 
 --Tampilkan 5 data pada data product
 SELECT * FROM products LIMIT 5;
+
+--UPDATE
+--Ubah data product id 1 dengan nama 'product dummy'
+UPDATE products SET name = 'Product Dummy', updated_at = current_timestamp WHERE id = 1;
+
+--Update qty = 3 pada transaction detail dengan product id 1
+UPDATE transaction_details SET qty = 3, updated_at = current_timestamp WHERE product_id = 1;
