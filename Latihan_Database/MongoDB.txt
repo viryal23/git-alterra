@@ -1,0 +1,167 @@
+// Introduction
+// Create database
+use digital_outlet
+
+// Problem 1 : Create, Read, Update, and Delete
+// INSERT
+// Insert 5 operators pada table operators
+db.operators.insertMany([
+    {_id: 1, name: "Viryal", created_at: new Date(), updated_at: null},
+    {_id: 2, name: "Zahra", created_at: new Date(), updated_at: null},
+    {_id: 3, name: "Nada", created_at: new Date(), updated_at: null},
+    {_id: 4, name: "Islamia", created_at: new Date(), updated_at: null},
+    {_id: 5, name: "Alfiah", created_at: new Date(), updated_at: null}
+])
+
+// Insert 3 product type
+db.product_types.insertMany([
+    {_id: 1, name: "Self Improvement", created_at: new Date(), updated_at: null},
+    {_id: 2, name: "Psychology", created_at: new Date(), updated_at: null},
+    {_id: 3, name: "Romance", created_at: new Date(), updated_at: null}
+])
+
+// Insert 2 product dengan product type id = 1, dan operators id = 3
+db.products.insertMany([
+    {_id: 1, product_type_id: 1, operator_id: 3, code: "SI1", name: "How to Win Friends & Influence People", status: 1, created_at: new Date(), updated_at: null},
+    {_id: 2, product_type_id: 1, operator_id: 3, code: "SI2", name: "Atomic Habits", status: 1, created_at: new Date(), updated_at: null}
+])
+
+// Insert 3 product dengan product type id = 2, dan operators id = 1
+db.products.insertMany([
+    {_id: 3, product_type_id: 2, operator_id: 1, code: "P1", name: "The Psychology of Money", status: 1, created_at: new Date(), updated_at: null},
+    {_id: 4, product_type_id: 2, operator_id: 1, code: "P2", name: "Peak Mind", status: 1, created_at: new Date(), updated_at: null},
+    {_id: 5, product_type_id: 2, operator_id: 1, code: "P3", name: "Getting to Zero", status: 1, created_at: new Date(), updated_at: null}
+])
+
+// Insert 3 product dengan product type id = 3, dan operators id = 4
+db.products.insertMany([
+    {_id: 6, product_type_id: 3, operator_id: 4, code: "R1", name: "Creating Destiny", status: 1, created_at: new Date(), updated_at: null},
+    {_id: 7, product_type_id: 3, operator_id: 4, code: "R2", name: "Perfect Romance", status: 1, created_at: new Date(), updated_at: null},
+    {_id: 8, product_type_id: 3, operator_id: 4, code: "R3", name: "You Told Me So", status: 1, created_at: new Date(), updated_at: null}
+])
+
+// Insert product description pada setiap product
+db.product_descriptions.insertMany([
+    {_id: 1, product_id: 1, description: "Buku Self Improvement dengan judul How to Win Friends & Influence People", created_at: new Date(), updated_at: null},
+    {_id: 2, product_id: 2, description: "Buku Self Improvement dengan judul Atomic Habits", created_at: new Date(), updated_at: null},
+    {_id: 3, product_id: 3, description: "Buku Psychology dengan judul The Psychology of Money", created_at: new Date(), updated_at: null},
+    {_id: 4, product_id: 4, description: "Buku Psychology dengan judul Peak Mind", created_at: new Date(), updated_at: null},
+    {_id: 5, product_id: 5, description: "Buku Psychology dengan judul Getting to Zero", created_at: new Date(), updated_at: null},
+    {_id: 6, product_id: 6, description: "Buku Romance dengan judul Creating Destiny", created_at: new Date(), updated_at: null},
+    {_id: 7, product_id: 7, description: "Buku Romance dengan judul Perfect Romance", created_at: new Date(), updated_at: null},
+    {_id: 8, product_id: 8, description: "Buku Romance dengan judul You Told Me So", created_at: new Date(), updated_at: null}
+])
+
+// Insert 3 payment methods
+db.payment_methods.insertMany([
+    {_id: 1, name: "Cash", status: 1, created_at: new Date(), updated_at: null},
+    {_id: 2, name: "Credit Card", status: 1, created_at: new Date(), updated_at: null},
+    {_id: 3, name: "Debit Card", status: 1, created_at: new Date(), updated_at: null}
+])
+
+// Insert 5 user pada tabel user
+db.users.insertMany([
+    {_id: 1, status: 1, name: "Virana", dob: "2001-01-23", gender: "P", created_at: new Date(), updated_at: null},
+    {_id: 2, status: 1, name: "Dhani", dob: "2000-11-13", gender: "L", created_at: new Date(), updated_at: null},
+    {_id: 3, status: 1, name: "Hasna", dob: "2001-12-08", gender: "P", created_at: new Date(), updated_at: null},
+    {_id: 4, status: 1, name: "Raditya", dob: "2001-04-02", gender: "L", created_at: new Date(), updated_at: null},
+    {_id: 5, status: 1, name: "Cahya", dob: "2001-05-20", gender: "P", created_at: new Date(), updated_at: null}
+])
+
+// Insert 3 transaksi di masing-masing user
+db.transactions.insertMany([
+    {_id: 1, user_id: 1, payment_method_id: 1, status: 1, total_qty: 3, total_price: 210550, created_at: new Date(), updated_at: null},
+    {_id: 2, user_id: 1, payment_method_id: 2, status: 1, total_qty: 3, total_price: 173010, created_at: new Date(), updated_at: null},
+    {_id: 3, user_id: 1, payment_method_id: 3, status: 1, total_qty: 3, total_price: 193450, created_at: new Date(), updated_at: null},
+    {_id: 4, user_id: 2, payment_method_id: 1, status: 1, total_qty: 3, total_price: 524700, created_at: new Date(), updated_at: null},
+    {_id: 5, user_id: 2, payment_method_id: 2, status: 1, total_qty: 3, total_price: 183810, created_at: new Date(), updated_at: null},
+    {_id: 6, user_id: 2, payment_method_id: 3, status: 1, total_qty: 3, total_price: 482010, created_at: new Date(), updated_at: null},
+    {_id: 7, user_id: 3, payment_method_id: 1, status: 1, total_qty: 3, total_price: 188960, created_at: new Date(), updated_at: null},
+    {_id: 8, user_id: 3, payment_method_id: 2, status: 1, total_qty: 3, total_price: 528350, created_at: new Date(), updated_at: null},
+    {_id: 9, user_id: 3, payment_method_id: 3, status: 1, total_qty: 3, total_price: 183810, created_at: new Date(), updated_at: null},
+    {_id: 10, user_id: 4, payment_method_id: 1, status: 1, total_qty: 3, total_price: 503850, created_at: new Date(), updated_at: null},
+    {_id: 11, user_id: 4, payment_method_id: 2, status: 1, total_qty: 3, total_price: 173010, created_at: new Date(), updated_at: null},
+    {_id: 12, user_id: 4, payment_method_id: 3, status: 1, total_qty: 3, total_price: 524700, created_at: new Date(), updated_at: null},
+    {_id: 13, user_id: 5, payment_method_id: 1, status: 1, total_qty: 3, total_price: 528100, created_at: new Date(), updated_at: null},
+    {_id: 14, user_id: 5, payment_method_id: 2, status: 1, total_qty: 3, total_price: 184350, created_at: new Date(), updated_at: null},
+    {_id: 15, user_id: 5, payment_method_id: 3, status: 1, total_qty: 3, total_price: 528350, created_at: new Date(), updated_at: null}
+])
+
+// Insert 3 product di masing-masing transaksi
+db.transaction_details.insertMany([
+    {_id: {transaction_id: 1, product_id: 1}, status: 1, qty: 1, price: 61600, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 1, product_id: 4}, status: 1, qty: 1, price: 82450, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 1, product_id: 6}, status: 1, qty: 1, price: 66500, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 2, product_id: 8}, status: 1, qty: 1, price: 66750, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 2, product_id: 7}, status: 1, qty: 1, price: 39760, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 2, product_id: 6}, status: 1, qty: 1, price: 66500, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 3, product_id: 1}, status: 1, qty: 1, price: 61600, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 3, product_id: 2}, status: 1, qty: 1, price: 75600, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 3, product_id: 3}, status: 1, qty: 1, price: 56250, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 4, product_id: 5}, status: 1, qty: 1, price: 386000, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 4, product_id: 4}, status: 1, qty: 1, price: 82450, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 4, product_id: 3}, status: 1, qty: 1, price: 56250, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 5, product_id: 4}, status: 1, qty: 1, price: 82450, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 5, product_id: 1}, status: 1, qty: 1, price: 61600, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 5, product_id: 7}, status: 1, qty: 1, price: 39760, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 6, product_id: 7}, status: 1, qty: 1, price: 39760, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 6, product_id: 3}, status: 1, qty: 1, price: 56250, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 6, product_id: 5}, status: 1, qty: 1, price: 386000, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 7, product_id: 7}, status: 1, qty: 1, price: 39760, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 7, product_id: 8}, status: 1, qty: 1, price: 66750, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 7, product_id: 4}, status: 1, qty: 1, price: 82450, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 8, product_id: 5}, status: 1, qty: 1, price: 386000, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 8, product_id: 2}, status: 1, qty: 1, price: 75600, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 8, product_id: 8}, status: 1, qty: 1, price: 66750, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 9, product_id: 1}, status: 1, qty: 1, price: 61600, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 9, product_id: 7}, status: 1, qty: 1, price: 39760, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 9, product_id: 4}, status: 1, qty: 1, price: 82450, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 10, product_id: 5}, status: 1, qty: 1, price: 386000, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 10, product_id: 1}, status: 1, qty: 1, price: 61600, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 10, product_id: 3}, status: 1, qty: 1, price: 56250, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 11, product_id: 6}, status: 1, qty: 1, price: 66500, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 11, product_id: 7}, status: 1, qty: 1, price: 39760, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 11, product_id: 8}, status: 1, qty: 1, price: 66750, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 12, product_id: 3}, status: 1, qty: 1, price: 56250, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 12, product_id: 4}, status: 1, qty: 1, price: 82450, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 12, product_id: 5}, status: 1, qty: 1, price: 386000, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 13, product_id: 5}, status: 1, qty: 1, price: 386000, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 13, product_id: 6}, status: 1, qty: 1, price: 66500, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 13, product_id: 2}, status: 1, qty: 1, price: 75600, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 14, product_id: 1}, status: 1, qty: 1, price: 61600, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 14, product_id: 3}, status: 1, qty: 1, price: 56250, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 14, product_id: 6}, status: 1, qty: 1, price: 66500, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 15, product_id: 8}, status: 1, qty: 1, price: 66750, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 15, product_id: 5}, status: 1, qty: 1, price: 386000, created_at: new Date(), updated_at: null},
+    {_id: {transaction_id: 15, product_id: 2}, status: 1, qty: 1, price: 75600, created_at: new Date(), updated_at: null}
+])
+
+// READ
+// Tampilkan nama user/pelanggan dengan gender laki-laki/M
+db.users.find({gender: "L"})
+
+// Tampilkan product dengan id = 3
+db.products.find({_id: 3})
+
+// Hitung jumlah user/pelanggan dengan status gender perempuan
+db.users.countDocuments({gender: "P"})
+
+// Tampilkan data pelanggan dengan urutan sesuai nama abjad
+db.users.find().sort({name: 1})
+
+// Tampilkan 5 data pada data product
+db.products.find().limit(5)
+
+// UPDATE
+// Ubah data product id 1 dengan nama 'product dummy'
+db.products.updateOne({_id: 1}, {$set: {name: "Product Dummy", updated_at: new Date()}})
+
+// Update qty = 3 pada transaction detail dengan product id 1
+db.transaction_details.updateMany({"_id.product_id": 1}, {$set: {qty: 3, updated_at: new Date()}})
+
+// DELETE
+// Delete data pada tabel product dengan id 1
+db.products.deleteOne({_id: 1})
+
+// Delete data pada tabel product dengan product type id 1
+db.products.deleteMany({"product_type_id": 1})
