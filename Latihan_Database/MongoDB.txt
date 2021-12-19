@@ -165,3 +165,222 @@ db.products.deleteOne({_id: 1})
 
 // Delete data pada tabel product dengan product type id 1
 db.products.deleteMany({"product_type_id": 1})
+
+// Problem 2 : Aggregation MongoDB
+// Create database
+use bookstore
+
+// Insert books
+db.books.insertMany([
+    {_id: l, title: "Wawasan Pancasila", authorID: 1, publisherID: 1, price: 71200, stats: {page: 324, weight: 300}, publishedAt: new Date("2018-10-01"), category: ["social", "politics"]},
+    {_id: 2, title: "Mata Air Keteladanan", authorID: 1, publisherID: 2, price: 106250, stats: {page: 672, weight: 650}, publishedAt: new Date("2017-09-01"), category: ["social", "politics"]},
+    {_id: 3, title: "Revolusi Pancasila", authorID: 1, publisherID: 1, price: 54400, stats: {page: 220, weight: 500}, publishedAt: new Date("2015-05-01"), category: ["social", "politics"]},
+    {_id: 4, title: "Self Driving", authorID: 2, publisherID: 1, price: 58650, stats: {page: 286, weight: 300} publishedAt: new Date("2018-05-01"), category: ["self-development"]},
+    {_id: 5, title: "Self Disruption", authorID: 2, publisherID: 2, price: 83300, stats: {page: 400, weight: 800}, publishedAt: new Date("2018-05-01"), category: ["self-development"]}
+])
+
+// Insert authors
+db.authors.insertMany([
+    {_id: 1, firstName: "Yudi", lastName: "Latif"},
+    {_id: 2, firstName: "Rhenald", lastName: "Kasali"}
+])
+
+// Insert publishers
+db.publishers.insertMany([
+    {_id: 1, publisherName: "Expose"},
+    {_id: 2, publisherName: "Mizan"}
+])
+
+// TASK
+// Gabungkan (menampilkan) data buku dari author id 1 dan author id 2
+db.books.find({authorID: {$in: [1, 2]}})
+
+// Tampilkan daftar buku dan harga author id 1
+db.books.find({authorID: 1}, {_id: 1, title: 1, price: 1})
+
+// Tampilkan total jumlah halaman buku author id 2
+db.books.aggregate([
+    {$match: {authorID: 2}},
+    {$group: {
+        _id: "$authorID",
+        totalPages: {$sum: "$stats.page"}
+    }}
+])
+
+// Tampilkan semua field books and authors terkait
+// Output 1
+db.authors.aggregate([{
+    $lookup: {
+        from: "books",
+        localField: "_id",
+        foreignField: "authorID",
+        as: "books"
+    }
+}])
+
+// Output 2
+db.books.aggregate([{
+    $lookup: {
+        from: "authors",
+        localField: "authorID",
+        foreignField: "_id",
+        as: "authors"
+    }
+}])
+
+// Tampilkan semua field books, authors, dan publishers terkait
+db.books.aggregate([
+    {
+        $lookup: {
+            from: "authors",
+            localField: "authorID",
+            foreignField: "_id",
+            as: "author"
+        }
+    },
+    {
+        $lookup: {
+            from: "publishers",
+            localField: "publisherID",
+            foreignField: "_id",
+            as: "publisher"
+        }
+    }
+])
+
+// Tampilkan summary data authors, books, dan publishers
+db.books.aggregate([
+    {
+        $lookup: {
+            from: "authors",
+            localField: "authorID",
+            foreignField: "_id",
+            as: "author"
+        }
+    },
+    {$unwind: "$author"},
+    {
+        $lookup: {
+            from: "publishers",
+            localField: "publisherID",
+            foreignField: "_id",
+            as: "publisher"
+        }
+    },
+    {$unwind: "$publisher"},
+    {
+        $group: {
+            _id: {$concat: ["$author.firstName", " ", "$author.lastName"]},
+            number_of_books: {$count: {}},
+            list_of_books: {$push: {$concat: ["$title", " (", "$publisher.publisherName", ")"]}}
+        }
+    }
+])
+
+// Digital_outlet ingin memberikan diskon untuk setiap buku, diskon ditentukan melihat harga buku tersebut dengan pembagian seperti ini
+db.books.aggregate([
+    {
+        $project: {
+            _id: 1,
+            title: 1,
+            price: "$price",
+            Promo: {
+                $switch:{
+                    branches: [
+                        {
+                            case: {$lt: ["$price", 60000]},
+                            then: "1%"
+                        },
+                        {
+                            case: {$gte: ["$price", 90000]},
+                            then: "3%"
+                        }
+                    ],
+                    default: "2%"
+                }
+            }
+        }
+    }
+])
+
+// Tampilkan semua nama buku, harga, nama author, dan nama publisher, urutkan dari harga termahal ke termurah
+db.books.aggregate([
+    {
+        $lookup: {
+            from: "authors",
+            localField: "authorID",
+            foreignField: "_id",
+            as: "author"
+        }
+    },
+    {$unwind: "$author"},
+    {
+        $lookup: {
+            from: "publishers",
+            localField: "publisherID",
+            foreignField: "_id",
+            as: "publisher"
+        }
+    },
+    {$unwind: "$publisher"},
+    {
+        $project: {
+            _id: 0,
+            title: 1,
+            price: 1,
+            author: {$concat: ["$author.firstName", " ", "$author.lastName"]},
+            publisher: "$publisher.publisherName"
+        }
+    },
+    {
+        $sort: {
+            price: -1
+        }
+    }
+])
+
+// Tampilkan data nama buku, harga, dan publisher, kemudian hanya tampilkan hanya data ke 3 dan ke 4
+// Menampilkan semua data
+db.books.aggregate([
+    {
+        $lookup: {
+            from: "publishers",
+            localField: "publisherID",
+            foreignField: "_id",
+            as: "publisher"
+        }
+    },
+    {$unwind: "$publisher"},
+    {
+        $project: {
+            title: 1,
+            price: 1,
+            publisher: "$publisher.publisherName"
+        }
+    },
+])
+
+// Menampilkan data ke 3 dan 4
+db.books.aggregate([
+    {
+        $lookup: {
+            from: "publishers",
+            localField: "publisherID",
+            foreignField: "_id",
+            as: "publisher"
+        }
+    },
+    {$unwind: "$publisher"},
+    {
+        $project: {
+            title: 1,
+            price: 1,
+            publisher: "$publisher.publisherName"
+        }
+    },
+    {
+        $match: {
+            _id: {$in: [3, 4]}
+        }
+    }
+])
