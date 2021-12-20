@@ -1,3 +1,5 @@
+Viryal Zahra Nada
+
 // Introduction
 // Create database
 use digital_outlet
