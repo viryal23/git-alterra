@@ -1,3 +1,5 @@
+Viryal Zahra Nada
+
 --CREATE DATABASE
 CREATE DATABASE transactions;
 
